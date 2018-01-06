@@ -5,8 +5,13 @@ int led_pins[] = {7, 8, 9, 10, 11, 12, 13};
 int clk = 5;
 int rst = 6;
 
-int up = 3;
-int down = 4;
+int up_right = 4;
+int down_right = 3;
+
+int up_left = 1;
+int down_left = 2;
+
+void draw_shape(bool shape[7][7]);
 
 class Matrix{
   const int width_;
@@ -78,26 +83,76 @@ public:
 //                           {0, 0, 0, 0, 0, 0, 0},
 //                           {0, 0, 0, 0, 0, 0, 0}};
 
-bool x_shape[7][7] = {{0, 0, 0, 0, 0, 0, 0},
-                      {0, 0, 0, 0, 0, 0, 0},
-                      {0, 0, 0, 0, 1, 1, 0},
-                      {0, 1, 1, 0, 1, 1, 0},
-                      {0, 0, 0, 0, 0, 0, 0},
-                      {0, 1, 0, 0, 0, 1, 0},
-                      {0, 0, 1, 1, 1, 0, 0}};
+bool down_left_shape[7][7] = {{0, 0, 0, 0, 0, 0, 0},
+                              {0, 0, 0, 0, 0, 0, 0},
+                              {0, 0, 0, 0, 1, 0, 0},
+                              {0, 1, 1, 0, 1, 0, 0},
+                              {0, 0, 0, 0, 0, 0, 0},
+                              {0, 1, 0, 0, 0, 1, 0},
+                              {0, 0, 1, 1, 1, 0, 0}};
                       
-bool swastika[7][7] = {{0, 1, 1, 0, 0, 0, 0},
-                       {0, 0, 0, 0, 0, 0, 0},
-                       {0, 1, 1, 0, 1, 1, 0},
-                       {0, 1, 1, 0, 1, 1, 0},
-                       {0, 0, 0, 0, 0, 0, 0},
-                       {0, 1, 0, 0, 0, 1, 0},
-                       {0, 0, 1, 1, 1, 0, 0}};
+bool up_left_shape[7][7] = {{0, 1, 1, 0, 0, 0, 0},
+                            {0, 0, 0, 0, 0, 0, 0},
+                            {0, 0, 1, 0, 1, 0, 0},
+                            {0, 0, 1, 0, 1, 0, 0},
+                            {0, 0, 0, 0, 0, 0, 0},
+                            {0, 1, 0, 0, 0, 1, 0},
+                            {0, 0, 1, 1, 1, 0, 0}};
 
-bool kawaii_shape[7][7] = {{0, 0, 0, 0, 0, 0, 0},
+bool down_right_shape[7][7] = {{0, 0, 0, 0, 0, 0, 0},
+                               {0, 0, 0, 0, 0, 0, 0},
+                               {0, 0, 1, 0, 0, 0, 0},
+                               {0, 0, 1, 0, 1, 1, 0},
+                               {0, 0, 0, 0, 0, 0, 0},
+                               {0, 1, 0, 0, 0, 1, 0},
+                               {0, 0, 1, 1, 1, 0, 0}};
+                      
+bool up_right_shape[7][7] = {{0, 0, 0, 0, 1, 1, 0},
+                             {0, 0, 0, 0, 0, 0, 0},
+                             {0, 0, 1, 0, 1, 0, 0},
+                             {0, 0, 1, 0, 1, 0, 0},
+                             {0, 0, 0, 0, 0, 0, 0},
+                             {0, 1, 0, 0, 0, 1, 0},
+                             {0, 0, 1, 1, 1, 0, 0}};
+
+
+bool down_both_shape[7][7] = {{0, 0, 0, 0, 0, 0, 0},
+                               {0, 0, 0, 0, 0, 0, 0},
+                               {0, 0, 0, 0, 0, 0, 0},
+                               {0, 1, 1, 0, 1, 1, 0},
+                               {0, 0, 0, 0, 0, 0, 0},
+                               {0, 1, 0, 0, 0, 1, 0},
+                               {0, 0, 1, 1, 1, 0, 0}};
+                      
+bool up_both_shape[7][7] = {{0, 1, 1, 0, 1, 1, 0},
+                             {0, 0, 0, 0, 0, 0, 0},
+                             {0, 0, 1, 0, 1, 0, 0},
+                             {0, 0, 1, 0, 1, 0, 0},
+                             {0, 0, 0, 0, 0, 0, 0},
+                             {0, 1, 0, 0, 0, 1, 0},
+                             {0, 0, 1, 1, 1, 0, 0}};
+
+                             
+bool down_up_shape[7][7] = {{0, 0, 0, 0, 1, 1, 0},
+                              {0, 0, 0, 0, 0, 0, 0},
+                              {0, 0, 0, 0, 1, 0, 0},
+                              {0, 1, 1, 0, 1, 0, 0},
+                              {0, 0, 0, 0, 0, 0, 0},
+                              {0, 1, 0, 0, 0, 1, 0},
+                              {0, 0, 1, 1, 1, 0, 0}};
+                      
+bool up_down_shape[7][7] = {{0, 1, 1, 0, 0, 0, 0},
+                            {0, 0, 0, 0, 0, 0, 0},
+                            {0, 0, 1, 0, 0, 0, 0},
+                            {0, 0, 1, 0, 1, 1, 0},
+                            {0, 0, 0, 0, 0, 0, 0},
+                            {0, 1, 0, 0, 0, 1, 0},
+                            {0, 0, 1, 1, 1, 0, 0}};
+
+bool normal_shape[7][7] = {{0, 0, 0, 0, 0, 0, 0},
                            {0, 0, 0, 0, 0, 0, 0},
-                           {0, 1, 1, 0, 1, 1, 0},
-                           {0, 1, 1, 0, 1, 1, 0},
+                           {0, 0, 1, 0, 1, 0, 0},
+                           {0, 0, 1, 0, 1, 0, 0},
                            {0, 0, 0, 0, 0, 0, 0},
                            {0, 1, 0, 0, 0, 1, 0},
                            {0, 0, 1, 1, 1, 0, 0}};
@@ -118,10 +173,13 @@ void setup() {
   pinMode(rst, OUTPUT);
   digitalWrite(rst, LOW);
 
-  pinMode(up, INPUT_PULLUP);
-  pinMode(down, INPUT_PULLUP);
+  pinMode(up_left, INPUT_PULLUP);
+  pinMode(down_left, INPUT_PULLUP);
   
-  matrix = swastika;
+  pinMode(up_right, INPUT_PULLUP);
+  pinMode(down_right, INPUT_PULLUP);
+  
+//  matrix = swastika;
 }
 
 void loop() {
@@ -140,53 +198,40 @@ void loop() {
 //  digitalWrite(rst, LOW);
   //delay(5000);
 
-  if(digitalRead(up) == LOW){
-   
-    for(int i = 0 ; i < MATRIX_HEIGTH ; ++ i){
-
-      for(int j = 0 ; j < MATRIX_WIDTH ; ++ j){
-        if(x_shape[i][j] == true){
-          digitalWrite(led_pins[j], LOW);
-          delay(1);
-          digitalWrite(led_pins[j], HIGH);
-        }
-      }
-      digitalWrite(clk, HIGH);
-      digitalWrite(clk, LOW);
-    }
-    digitalWrite(rst, HIGH);
-    digitalWrite(rst, LOW);
-  }else if(digitalRead(down) == LOW){
-
-    for(int i = 0 ; i < MATRIX_HEIGTH ; ++ i){
-
-      for(int j = 0 ; j < MATRIX_WIDTH ; ++ j){
-        if(swastika[i][j] == true){
-          digitalWrite(led_pins[j], LOW);
-          delay(1);
-          digitalWrite(led_pins[j], HIGH);
-        }
-      }
-      digitalWrite(clk, HIGH);
-      digitalWrite(clk, LOW);
-    }
-    digitalWrite(rst, HIGH);
-    digitalWrite(rst, LOW);
+  if(digitalRead(up_left) == LOW && digitalRead(down_right) == LOW){
+    draw_shape(up_down_shape);
+  }else if(digitalRead(down_left) == LOW && digitalRead(up_right) == LOW){
+    draw_shape(down_up_shape);
+  }else if(digitalRead(up_left) == LOW && digitalRead(up_right) == LOW){
+    draw_shape(up_both_shape);
+  }else if(digitalRead(down_left) == LOW && digitalRead(down_right) == LOW){
+    draw_shape(down_both_shape);
+  }else if(digitalRead(up_left) == LOW){
+    draw_shape(up_left_shape);
+  }else if(digitalRead(down_left) == LOW){
+    draw_shape(down_left_shape);
+  }else if(digitalRead(up_right) == LOW){
+    draw_shape(up_right_shape);
+  }else if(digitalRead(down_right) == LOW){
+    draw_shape(down_right_shape);
   }else{
-    for(int i = 0 ; i < MATRIX_HEIGTH ; ++ i){
-
-      for(int j = 0 ; j < MATRIX_WIDTH ; ++ j){
-        if(kawaii_shape[i][j] == true){
-          digitalWrite(led_pins[j], LOW);
-          delay(1);
-          digitalWrite(led_pins[j], HIGH);
-        }
-      }
-      digitalWrite(clk, HIGH);
-      digitalWrite(clk, LOW);
-    }
-    digitalWrite(rst, HIGH);
-    digitalWrite(rst, LOW);
+    draw_shape(normal_shape);
   }
 }
 
+void draw_shape(bool shape[7][7]){
+    for(int i = 0 ; i < MATRIX_HEIGTH ; ++ i){
+
+      for(int j = 0 ; j < MATRIX_WIDTH ; ++ j){
+        if(shape[i][j] == true){
+          digitalWrite(led_pins[j], LOW);
+          delay(1);
+          digitalWrite(led_pins[j], HIGH);
+        }
+      }
+      digitalWrite(clk, HIGH);
+      digitalWrite(clk, LOW);
+    }
+    digitalWrite(rst, HIGH);
+    digitalWrite(rst, LOW);
+}
